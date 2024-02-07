@@ -27,24 +27,21 @@ namespace GCMidterm
         public static Videogame AddPurchase(Videogame v, int quantity)
         {
             v.price *= quantity;
-<<<<<<< HEAD
+
             return v;
 
         }
-        public override string ToString()
-=======
-            return v; 
 
-        }
-       public override string ToString()
->>>>>>> e16aa707966e67ebffecfdb60fdfef03bbeb4275
+
+        public override string ToString()
+
         {
             string detials = $"{name} {category} {description} {price}";
             return detials;
         }
 
-
-
-
     }
+
+
+
 }
