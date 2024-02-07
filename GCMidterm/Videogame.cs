@@ -23,6 +23,8 @@ namespace GCMidterm
             price = _price;
         }
 
+       
+
 
     }
 }
