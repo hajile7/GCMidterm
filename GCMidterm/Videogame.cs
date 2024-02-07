@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,8 +23,20 @@ namespace GCMidterm
             description = _description;
             price = _price;
         }
+        //Purchase Method
+        public static Videogame AddPurchase(Videogame v, int quantity)
+        {
+            v.price *= quantity;
+            return v; 
 
-       
+        }
+       public override string ToString()
+        {
+            string detials = $"{name} {category} {description} {price}";
+            return detials;
+        }
+
+
 
 
     }

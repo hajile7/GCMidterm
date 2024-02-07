@@ -20,3 +20,10 @@ videogames.AddRange(new List<Videogame>
     new Videogame("GTA:V", "Multiplayer", "Open World, FPS, Immersive",  20.00m),
     new Videogame("DOOM", "FPS", "Fast-Paced, Gory, Single-Player",  19.99m),
 });
+
+//Displays list
+for (int i = 0; i < videogames.Count; i++)
+{
+    Console.WriteLine($"{i+1}. {videogames[i].ToString()}");
+}
+
