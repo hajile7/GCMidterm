@@ -26,3 +26,6 @@ for (int i = 0; i < videogames.Count; i++)
 {
     Console.WriteLine($"{i + 1}. {videogames[i].ToString()}");
 }
+
+//Get user input
+Console.WriteLine("Would you like to purchase a game?");
