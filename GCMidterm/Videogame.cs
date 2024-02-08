@@ -31,13 +31,11 @@ namespace GCMidterm
             return v;
 
         }
-
-
+        //Formatted list method
         public override string ToString()
 
         {
-            string detials = $"{name} {category} {description} {price}";
-            return detials;
+            return string.Format("{0, -20} {1, -15} {2, -40} {3, 10:C}", name, category, description, price); //:C will convert price to currency
         }
 
     }

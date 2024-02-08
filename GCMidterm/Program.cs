@@ -24,7 +24,7 @@ videogames.AddRange(new List<Videogame>
 //Displays list
 for (int i = 0; i < videogames.Count; i++)
 {
-    Console.WriteLine($"{i + 1}. {videogames[i].ToString()}");
+    Console.WriteLine($"{i + 1, -2}. {videogames[i].ToString()}"); //the -2 here sets the minimum width of the index here
 }
 
 //Get user input
