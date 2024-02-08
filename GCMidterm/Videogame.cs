@@ -35,6 +35,22 @@ namespace GCMidterm
             return string.Format("{0, -20} {1, -15} {2, -40} {3, 10:C}", name, category, description, price); //:C will convert price to currency
         }
 
+        public static decimal TaxRate(decimal x, decimal y)
+        {
+            return x * y; 
+        }
+
+        public static string GrandtotalCalc(decimal x, decimal y)
+        {
+            decimal taxamount = Videogame.TaxRate(y, x);
+            return
+            $"Your subtotal is: {x:C}\nSales Tax: {Math.Round(Videogame.TaxRate(y,x),2):C}\n" +
+            $"Your grand total is: {Math.Round(taxamount + x, 2):C}";
+
+
+           
+            
+        }
     }
 
 

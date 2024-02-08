@@ -8,6 +8,17 @@ namespace Validtor
 {
     public class Validator
     {
+       public static string GetValidString(List<string> list)
+        {
+               string result = Console.ReadLine().Trim().ToLower();
+             
+            while (!list.Contains(result))
+            {
+                Console.WriteLine("Invalid, please try again/");
+                result = Console.ReadLine().Trim().ToLower();
+            }
+           return result;
+        }
         public static int GetInputInt()
         {
             int result = -1;

@@ -23,7 +23,8 @@ videogames.AddRange(new List<Videogame>
 });
 //decimal to keep a running total
 decimal runningTotal = 0;
-
+//sales tax constant 
+const decimal tax = 0.06m;
 //start infinite program loop
 bool runProgram = true;
 while (runProgram)
@@ -60,5 +61,21 @@ while (runProgram)
 
     //see if user would like to keep shopping
     runProgram = Validator.GetContinue("Would you like to purchase any other games?");
-
 }
+
+//Prints out subtotal, tax, grandtotal
+Console.WriteLine(Videogame.GrandtotalCalc(runningTotal, tax));
+
+//Valid Payment choices 
+List<string> paymentoptions = new List<string>()
+{
+"cash",
+"credit",
+"check"
+};
+
+
+//Asks for payment type
+Console.WriteLine("How would you like to pay? Please enter cash, check, or credit");
+string paymentchoice = Validtor.Validator.GetValidString(paymentoptions);
+
