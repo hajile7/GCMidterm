@@ -23,11 +23,13 @@ namespace GCMidterm
             description = _description;
             price = _price;
         }
+
         //Purchase Method
         public static decimal AddPurchase(Videogame v, int quantity)
         {
             return v.price * quantity;
         }
+
         //Formatted list method
         public override string ToString()
 
@@ -35,22 +37,35 @@ namespace GCMidterm
             return string.Format("{0, -20} {1, -15} {2, -40} {3, 10:C}", name, category, description, price); //:C will convert price to currency
         }
 
+        //Tax Method
         public static decimal TaxRate(decimal x, decimal y)
         {
             return x * y; 
         }
 
-        public static string GrandtotalCalc(decimal x, decimal y)
+        //Subtotal method before payment
+        public static string GrandTotalPrint(decimal x, decimal y)
         {
             decimal taxamount = Videogame.TaxRate(y, x);
             return
             $"Your subtotal is: {x:C}\nSales Tax: {Math.Round(Videogame.TaxRate(y,x),2):C}\n" +
             $"Your grand total is: {Math.Round(taxamount + x, 2):C}";
-
-
-           
             
         }
+
+        //get grand total method
+        public static decimal GrandTotalAmount(decimal x, decimal y)
+        {
+            return x + (x * y);
+        }
+
+
+        //Cash method
+        public static decimal GetChange(decimal cash, decimal total)
+        {
+            return cash - total;
+        }
+
     }
 
 

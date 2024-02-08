@@ -1,6 +1,7 @@
 ﻿//Welcome
 using GCMidterm;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Validtor;
 Console.WriteLine("Welcome to the videogame store!");
 
@@ -21,10 +22,13 @@ videogames.AddRange(new List<Videogame>
     new Videogame("GTA:V", "Multiplayer", "Open World, FPS, Immersive",  20.00m),
     new Videogame("DOOM", "FPS", "Fast-Paced, Gory, Single-Player",  19.99m),
 });
+
 //decimal to keep a running total
 decimal runningTotal = 0;
+
 //sales tax constant 
 const decimal tax = 0.06m;
+
 //start infinite program loop
 bool runProgram = true;
 while (runProgram)
@@ -39,7 +43,7 @@ while (runProgram)
     //Get user input
     //Get the game they'd like 
     Console.Write("Would you like to purchase a game? Please enter its menu number: ");
-    int choice = Validtor.Validator.GetInputInt(1, 12);
+    int choice = Validator.GetInputInt(1, 12, "Please enter a valid menu choice");
     string choice2 = videogames[choice - 1].ToString();
     Console.WriteLine($"Great! You've selected {videogames[choice - 1].name}.");
 
@@ -49,7 +53,7 @@ while (runProgram)
 
     //Get quantity
     Console.Write("How many copies would you like to purchase? ");
-    int quantityChoice = Validtor.Validator.GetInputInt();
+    int quantityChoice = Validator.GetInputInt();
 
     //increment our total for each purchase
     decimal currentPurchase = Videogame.AddPurchase(userChoice, quantityChoice);
@@ -64,7 +68,7 @@ while (runProgram)
 }
 
 //Prints out subtotal, tax, grandtotal
-Console.WriteLine(Videogame.GrandtotalCalc(runningTotal, tax));
+Console.WriteLine(Videogame.GrandTotalPrint(runningTotal, tax));
 
 //Valid Payment choices 
 List<string> paymentoptions = new List<string>()
@@ -74,8 +78,26 @@ List<string> paymentoptions = new List<string>()
 "check"
 };
 
+//create grand total variable for math
+decimal grandTotal = Videogame.GrandTotalAmount(runningTotal, tax);
 
-//Asks for payment type
+//Asks for payment type + validate
 Console.WriteLine("How would you like to pay? Please enter cash, check, or credit");
-string paymentchoice = Validtor.Validator.GetValidString(paymentoptions);
+string paymentchoice = Validator.GetValidString(paymentoptions);
+
+//payment type logic
+if (paymentchoice == "cash")
+{
+    Console.WriteLine("How much cash are you providing?");
+    decimal cashPayment = Validator.GetInputDecimal(grandTotal, "Please try again. Invalid input or insufficient funds.");
+    decimal customerChange = Videogame.GetChange(cashPayment, grandTotal); //create change var to use in receipt later
+    Console.WriteLine($"Thank you for your order! Your change is: {Videogame.GetChange(cashPayment, grandTotal):C}");
+}
+//else if (paymentchoice == "check")
+//{
+//    Console.Write("What is your check number: ");
+//    int checkNum = int.Parse(Console.ReadLine().Trim());
+//    checkNum = Validator.GetInputInt(4, 6);
+
+//}
 

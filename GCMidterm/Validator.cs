@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace Validtor
 {
     public class Validator
     {
+        //Logan's method for getting a valid string based on input list
        public static string GetValidString(List<string> list)
         {
                string result = Console.ReadLine().Trim().ToLower();
@@ -19,21 +21,46 @@ namespace Validtor
             }
            return result;
         }
-        public static int GetInputInt()
+
+        //Getting int within number range
+        public static int GetInputInt(int x, int y, string s)
         {
             int result = -1;
-            while (int.TryParse(Console.ReadLine(), out result) == false)
+            while (!int.TryParse(Console.ReadLine(), out result) || (result < x || result > y)) 
             {
-                Console.WriteLine("Invalid input.");
+                Console.WriteLine($"{s}");
             }
             return result;
         }
 
-        //Getting int within range
-        public static int GetInputInt(int x, int y)
+        //Getting int with specific number of digits
+        //public static int GetInputInt(int y, int z)
+        //{
+        //    int digits = -1;
+        //    int x;
+        //    while (!int.TryParse(Console.ReadLine().Trim(), out x) || (digits < y || digits > z))
+        //    {
+        //        digits = (int)Math.Floor(Math.Log10(x) + 1); // (int) is used to cast the double returned from out math statements as an integer. We use log 10 + 1 to deduce the number of digits in the input (x)
+        //        Console.WriteLine($"Please enter a valid check number");
+        //        x = int.Parse(Console.ReadLine().Trim());
+        //    }
+        //    return x;
+        //}
+
+        //Getting decimal in reference to num
+        public static decimal GetInputDecimal(decimal x, string s)
+        {
+            decimal result = -1;
+            while (!decimal.TryParse(Console.ReadLine(), out result) || result <= x)
+            {
+                Console.WriteLine($"{s}");
+            }
+            return result;
+        }
+        public static int GetInputInt()
         {
             int result = -1;
-            while (!int.TryParse(Console.ReadLine(), out result) || (result < x || result > y)) 
+            while (!int.TryParse(Console.ReadLine(), out result))
             {
                 Console.WriteLine("Invalid input.");
             }
