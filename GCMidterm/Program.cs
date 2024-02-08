@@ -1,6 +1,7 @@
 ﻿//Welcome
 using GCMidterm;
-
+using System.Diagnostics;
+using Validtor;
 Console.WriteLine("Welcome to the videogame store!");
 
 //Create + Print list of games
@@ -20,12 +21,44 @@ videogames.AddRange(new List<Videogame>
     new Videogame("GTA:V", "Multiplayer", "Open World, FPS, Immersive",  20.00m),
     new Videogame("DOOM", "FPS", "Fast-Paced, Gory, Single-Player",  19.99m),
 });
+//decimal to keep a running total
+decimal runningTotal = 0;
 
-//Displays list
-for (int i = 0; i < videogames.Count; i++)
+//start infinite program loop
+bool runProgram = true;
+while (runProgram)
 {
-    Console.WriteLine($"{i + 1, -2}. {videogames[i].ToString()}"); //the -2 here sets the minimum width of the index here
-}
 
-//Get user input
-Console.WriteLine("Would you like to purchase a game?");
+    //Displays list
+    for (int i = 0; i < videogames.Count; i++)
+    {
+        Console.WriteLine($"{i + 1,-2}. {videogames[i].ToString()}"); //the -2 here sets the minimum width of the index
+    }
+
+    //Get user input
+    //Get the game they'd like 
+    Console.Write("Would you like to purchase a game? Please enter its menu number: ");
+    int choice = Validtor.Validator.GetInputInt(1, 12);
+    string choice2 = videogames[choice - 1].ToString();
+    Console.WriteLine($"Great! You've selected {videogames[choice - 1].name}.");
+
+    //make separate var to store actual videogame object
+    Videogame userChoice = videogames[choice - 1];
+    Console.WriteLine(userChoice.ToString());
+
+    //Get quantity
+    Console.Write("How many copies would you like to purchase? ");
+    int quantityChoice = Validtor.Validator.GetInputInt();
+
+    //increment our total for each purchase
+    decimal currentPurchase = Videogame.AddPurchase(userChoice, quantityChoice);
+    runningTotal += currentPurchase;
+
+    //Pass input into purchase method
+    Console.WriteLine("Thank you! That will be: $" + Videogame.AddPurchase(userChoice, quantityChoice));
+    Console.WriteLine($"Your running total is {runningTotal:C}");
+
+    //see if user would like to keep shopping
+    runProgram = Validator.GetContinue("Would you like to purchase any other games?");
+
+}

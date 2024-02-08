@@ -24,12 +24,9 @@ namespace GCMidterm
             price = _price;
         }
         //Purchase Method
-        public static Videogame AddPurchase(Videogame v, int quantity)
+        public static decimal AddPurchase(Videogame v, int quantity)
         {
-            v.price *= quantity;
-
-            return v;
-
+            return v.price * quantity;
         }
         //Formatted list method
         public override string ToString()
