@@ -16,7 +16,7 @@ namespace Validtor
              
             while (!list.Contains(result))
             {
-                Console.WriteLine("Invalid, please try again/");
+                Console.WriteLine("Invalid, please try again");
                 result = Console.ReadLine().Trim().ToLower();
             }
            return result;
@@ -32,21 +32,6 @@ namespace Validtor
             }
             return result;
         }
-
-        //Getting int with specific number of digits
-        //public static int GetInputInt(int y, int z)
-        //{
-        //    int digits = -1;
-        //    int x;
-        //    while (!int.TryParse(Console.ReadLine().Trim(), out x) || (digits < y || digits > z))
-        //    {
-        //        digits = (int)Math.Floor(Math.Log10(x) + 1); // (int) is used to cast the double returned from out math statements as an integer. We use log 10 + 1 to deduce the number of digits in the input (x)
-        //        Console.WriteLine($"Please enter a valid check number");
-        //        x = int.Parse(Console.ReadLine().Trim());
-        //    }
-        //    return x;
-        //}
-
 
         //Getting decimal in reference to num
         public static decimal GetInputDecimal(decimal x, string s)
