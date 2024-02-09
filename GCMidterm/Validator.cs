@@ -47,6 +47,7 @@ namespace Validtor
         //    return x;
         //}
 
+
         //Getting decimal in reference to num
         public static decimal GetInputDecimal(decimal x, string s)
         {
