@@ -2,6 +2,7 @@
 using GCMidterm;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using Validtor;
 Console.WriteLine("Welcome to the videogame store!");
 
@@ -86,6 +87,7 @@ Console.WriteLine("How would you like to pay? Please enter cash, check, or credi
 string paymentchoice = Validator.GetValidString(paymentoptions);
 
 //payment type logic
+//cash logic 
 if (paymentchoice == "cash")
 {
     Console.WriteLine("How much cash are you providing?");
@@ -93,11 +95,58 @@ if (paymentchoice == "cash")
     decimal customerChange = Videogame.GetChange(cashPayment, grandTotal); //create change var to use in receipt later
     Console.WriteLine($"Thank you for your order! Your change is: {Videogame.GetChange(cashPayment, grandTotal):C}");
 }
-//else if (paymentchoice == "check")
-//{
-//    Console.Write("What is your check number: ");
-//    int checkNum = int.Parse(Console.ReadLine().Trim());
-//    checkNum = Validator.GetInputInt(4, 6);
 
-//}
+//check logic
+else if (paymentchoice == "check")
+{
+    Console.WriteLine("Please enter your check number: ");
+    string checkNum = Console.ReadLine().Trim();
+    Regex pattern = new Regex(@"^[0-9]{4,6}$");
+    Match match = pattern.Match(checkNum);
+    while (!match.Success)
+    {
+        Console.WriteLine("Invalid. Please try again");
+        checkNum = Console.ReadLine().Trim();
+        match = pattern.Match(checkNum);
+    }
+}
 
+//credit logic
+else if (paymentchoice == "credit")
+{
+    //card num validation
+    Console.Write("Please enter your card number: ");
+    string cardNum = Console.ReadLine().Trim();
+    Regex pattern = new Regex(@"^[0-9][0-9]{3}[-.\s]?[0-9]{4}[-.\s]?[0-9]{4}[-.\s]?[0-9]{4}$");
+    Match match = pattern.Match(cardNum);
+    while (!match.Success)
+    {
+        Console.WriteLine("Invalid card number. Please try again");
+        cardNum = Console.ReadLine().Trim();
+        match = pattern.Match(cardNum);
+    }
+
+    //card expiration date validation
+    Console.Write("Expiration date: ");
+    string expDate = Console.ReadLine().Trim();
+    Regex pattern1 = new Regex(@"^(0[1-9]|1[0-2])[-/.]?(\d{2})$");
+    Match match1 = pattern1.Match(expDate);
+    while (!match1.Success)
+    {
+        Console.WriteLine("Invalid expiration date. Please try again");
+        expDate = Console.ReadLine().Trim();
+        match1 = pattern1.Match(expDate);
+    }
+
+    //card CVV validation
+    Console.Write("CVV: ");
+    string cvv = Console.ReadLine().Trim();
+    Regex pattern2 = new Regex(@"^\d{3}$");
+    Match match2 = pattern2.Match(cvv);
+    while (!match2.Success)
+    {
+        Console.WriteLine("Invalid CVV. Please try again");
+        cvv = Console.ReadLine().Trim();
+        match2 = pattern2.Match(cvv);
+    }
+}
