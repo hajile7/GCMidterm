@@ -3,6 +3,7 @@ using GCMidterm;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 using Validtor;
 Console.WriteLine("Welcome to the videogame store!");
 
@@ -29,7 +30,8 @@ decimal runningTotal = 0;
 
 //sales tax constant 
 const decimal tax = 0.06m;
-
+List<Videogame> cartlist = new List<Videogame>();
+//List
 //start infinite program loop
 bool runProgram = true;
 while (runProgram)
@@ -50,11 +52,17 @@ while (runProgram)
 
     //make separate var to store actual videogame object
     Videogame userChoice = videogames[choice - 1];
+    //Userchoice1 = userChoice;
     Console.WriteLine(userChoice.ToString());
-
     //Get quantity
     Console.Write("How many copies would you like to purchase? ");
     int quantityChoice = Validator.GetInputInt();
+  
+    // Adds desired games and quantity to list
+    for (int i = 0;i< quantityChoice;i++)
+    {
+     cartlist.Add(userChoice);
+    }
 
     //increment our total for each purchase
     decimal currentPurchase = Videogame.AddPurchase(userChoice, quantityChoice);
@@ -66,6 +74,7 @@ while (runProgram)
 
     //see if user would like to keep shopping
     runProgram = Validator.GetContinue("Would you like to purchase any other games?");
+    Console.Clear();
 }
 
 //Prints out subtotal, tax, grandtotal
@@ -92,8 +101,10 @@ if (paymentchoice == "cash")
 {
     Console.WriteLine("How much cash are you providing?");
     decimal cashPayment = Validator.GetInputDecimal(grandTotal, "Please try again. Invalid input or insufficient funds.");
+    Console.Clear(); 
     decimal customerChange = Videogame.GetChange(cashPayment, grandTotal); //create change var to use in receipt later
-    Console.WriteLine($"Thank you for your order! Your change is: {Videogame.GetChange(cashPayment, grandTotal):C}");
+    Videogame.FinalReceiptCash(cartlist, runningTotal, tax);
+    Console.WriteLine($"Thank you for your order! You paid {cashPayment:C} \nYour change is {Videogame.GetChange(cashPayment, grandTotal):C}");
 }
 
 //check logic
@@ -149,4 +160,7 @@ else if (paymentchoice == "credit")
         cvv = Console.ReadLine().Trim();
         match2 = pattern2.Match(cvv);
     }
+
 }
+
+  

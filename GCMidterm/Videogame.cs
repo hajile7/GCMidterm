@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +67,24 @@ namespace GCMidterm
             return cash - total;
         }
 
+        //Final Receipt method
+        public static void FinalReceiptCash(List<Videogame> list, decimal x, decimal y)
+        {
+            
+            foreach (Videogame v in list.DistinctBy(g => g.name).ToList())
+            {
+                int count = 0;
+                decimal gameprice = v.price;
+                foreach (Videogame v2 in list.Where(x=> x.name == v.name).ToList())
+                {
+                    count++; 
+                }
+                gameprice *= count;
+                Console.WriteLine($"{v.name} ({count})     {gameprice:C}");
+            }
+            Console.WriteLine(GrandTotalPrint(x, y));
+            
+        }
     }
 
 
