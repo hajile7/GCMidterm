@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Validtor;
-Console.WriteLine("Welcome to the videogame store!");
+Console.WriteLine("Welcome to the videogame store!\n");
 
 //Create + Print list of games
 List<Videogame> videogames = new List<Videogame>();
@@ -36,7 +36,8 @@ List<Videogame> cartlist = new List<Videogame>();
 bool runProgram = true;
 while (runProgram)
 {
-
+    Console.WriteLine(string.Format("{0, -24} {1, -15} {2, -40} {3, 9}", "Title", "Genre", "Tags", "Price"));
+    Console.WriteLine(string.Format("{0, -24} {1, -15} {2, -40} {3, 10}", "===========", "==========", "=============================", "======"));
     //Displays list
     for (int i = 0; i < videogames.Count; i++)
     {
@@ -45,23 +46,23 @@ while (runProgram)
 
     //Get user input
     //Get the game they'd like 
-    Console.Write("Would you like to purchase a game? Please enter its menu number: ");
+    Console.Write("\nWould you like to purchase a game? Please enter its menu number: ");
     int choice = Validator.GetInputInt(1, 12, "Please enter a valid menu choice");
     string choice2 = videogames[choice - 1].ToString();
     Console.WriteLine($"Great! You've selected {videogames[choice - 1].name}.");
 
     //make separate var to store actual videogame object
     Videogame userChoice = videogames[choice - 1];
-    //Userchoice1 = userChoice;
-    Console.WriteLine(userChoice.ToString());
+    //Console.WriteLine(userChoice.ToString());
+
     //Get quantity
     Console.Write("How many copies would you like to purchase? ");
     int quantityChoice = Validator.GetInputInt();
-  
+
     // Adds desired games and quantity to list
-    for (int i = 0;i< quantityChoice;i++)
+    for (int i = 0; i < quantityChoice; i++)
     {
-     cartlist.Add(userChoice);
+        cartlist.Add(userChoice);
     }
 
     //increment our total for each purchase
@@ -69,7 +70,7 @@ while (runProgram)
     runningTotal += currentPurchase;
 
     //Pass input into purchase method
-    Console.WriteLine("Thank you! That will be: $" + Videogame.AddPurchase(userChoice, quantityChoice));
+    Console.WriteLine("Thank you! That will be $" + Videogame.AddPurchase(userChoice, quantityChoice));
     Console.WriteLine($"Your running total is {runningTotal:C}");
 
     //see if user would like to keep shopping
@@ -101,10 +102,11 @@ if (paymentchoice == "cash")
 {
     Console.WriteLine("How much cash are you providing?");
     decimal cashPayment = Validator.GetInputDecimal(grandTotal, "Please try again. Invalid input or insufficient funds.");
-    Console.Clear(); 
     decimal customerChange = Videogame.GetChange(cashPayment, grandTotal); //create change var to use in receipt later
-    Videogame.FinalReceiptCash(cartlist, runningTotal, tax);
-    Console.WriteLine($"Thank you for your order! You paid {cashPayment:C} \nYour change is {Videogame.GetChange(cashPayment, grandTotal):C}");
+    Console.Clear();
+    Videogame.FinalReceipt(cartlist, runningTotal, tax);
+    Console.WriteLine($"Thank you for your purchase!\nYou paid {cashPayment:C} in cash.\nYour change is {Videogame.GetChange(cashPayment, grandTotal):C}.");
+    Console.WriteLine("====================================");
 }
 
 //check logic
@@ -120,6 +122,10 @@ else if (paymentchoice == "check")
         checkNum = Console.ReadLine().Trim();
         match = pattern.Match(checkNum);
     }
+    Console.Clear();
+    Videogame.FinalReceipt(cartlist, runningTotal, tax);
+    Console.WriteLine($"Thank you for your purchase!\nPaid with check {checkNum}.");
+    Console.WriteLine("====================================");
 }
 
 //credit logic
@@ -160,7 +166,10 @@ else if (paymentchoice == "credit")
         cvv = Console.ReadLine().Trim();
         match2 = pattern2.Match(cvv);
     }
+    Console.Clear();
+    Videogame.FinalReceipt(cartlist, runningTotal, tax);
+    Console.WriteLine($"Thank you for your purchase!\nPaid with card {cardNum[0]}{cardNum[1]}{cardNum[2]}{cardNum[3]}-****-****-****.");
+    Console.WriteLine("====================================");
 
 }
 
-  

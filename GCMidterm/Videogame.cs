@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace GCMidterm
 {
@@ -41,17 +43,15 @@ namespace GCMidterm
         //Tax Method
         public static decimal TaxRate(decimal x, decimal y)
         {
-            return x * y; 
+            return x * y;
         }
 
         //Subtotal method before payment
         public static string GrandTotalPrint(decimal x, decimal y)
         {
             decimal taxamount = Videogame.TaxRate(y, x);
-            return
-            $"Your subtotal is: {x:C}\nSales Tax: {Math.Round(Videogame.TaxRate(y,x),2):C}\n" +
-            $"Your grand total is: {Math.Round(taxamount + x, 2):C}";
-            
+            return "====================================\n" + string.Format("{0, -13}{1, 23}\n{2, -12}{3, 23}\n{4, -13}{5, 23}",
+            "Subtotal:", $"{x:C}", "Tax:", $"{TaxRate(y, x):C}", "Total:", $"{Math.Round(taxamount + x, 2):C}") + "\n====================================";
         }
 
         //get grand total method
@@ -68,25 +68,26 @@ namespace GCMidterm
         }
 
         //Final Receipt method
-        public static void FinalReceiptCash(List<Videogame> list, decimal x, decimal y)
+        public static void FinalReceipt(List<Videogame> list, decimal x, decimal y)
         {
-            
-            foreach (Videogame v in list.DistinctBy(g => g.name).ToList())
+            Console.WriteLine("====================================");
+            Console.WriteLine("|             RECEIPT              |");
+            Console.WriteLine("====================================");
+            Console.WriteLine(string.Format("{0, -19} {1, -8}{2,8:C}", "Title", "Amt.", "Price"));
+            foreach (Videogame v in list.DistinctBy(g => g.name).ToList()) //returns list of unique games purchased
             {
                 int count = 0;
                 decimal gameprice = v.price;
-                foreach (Videogame v2 in list.Where(x=> x.name == v.name).ToList())
+                foreach (Videogame v2 in list.Where(x => x.name == v.name).ToList()) //second list that keeps track of how many copies of each unique game were purchased
                 {
-                    count++; 
+                    count++;
                 }
-                gameprice *= count;
-                Console.WriteLine($"{v.name} ({count})     {gameprice:C}");
+                gameprice *= count; //updates the unqie game's price without changing reference value                    
+                //Console.WriteLine($"{v.name} ({count})\t{gameprice:C}");
+                Console.WriteLine(string.Format("{0, -19} ({1}){2,13:C}", v.name, count, gameprice));
             }
             Console.WriteLine(GrandTotalPrint(x, y));
-            
         }
     }
-
-
 
 }
