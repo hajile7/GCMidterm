@@ -82,8 +82,7 @@ namespace GCMidterm
                 {
                     count++;
                 }
-                gameprice *= count; //updates the unqie game's price without changing reference value                    
-                //Console.WriteLine($"{v.name} ({count})\t{gameprice:C}");
+                gameprice *= count; //updates the unique game's price without changing reference value                    
                 Console.WriteLine(string.Format("{0, -19} ({1}){2,13:C}", v.name, count, gameprice));
             }
             Console.WriteLine(GrandTotalPrint(x, y));
