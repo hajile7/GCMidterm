@@ -83,8 +83,11 @@ while (runProg)
         //Get quantity
         Console.Write("How many copies would you like to purchase? ");
         int quantityChoice = Validator.GetInputInt();
+         while (quantityChoice > userChoice.quantity)
+         {
+            quantityChoice = Validator.GetInputInt($"We only have {userChoice.quantity} copies left. Please try again.");
+         }  
         userChoice.quantity -= quantityChoice; //update stock
-
         // Adds desired games and quantity to list
         for (int i = 0; i < quantityChoice; i++)
         {

@@ -1,0 +1,12 @@
+Celeste|Platformer|Challenging, Pixel Art, Indie|19.99|25
+Hollow Knight|Metrovania|Challenging, Action, Indie|19.99|25
+Apex Legends|FPS|Multiplayer, Competitive, F2P| 0.00|25
+Pokemon Crystal|RPG|Immersive, Pixel Art, Adventure|  75.00|2
+Factorio|Factory Builder|Immersive, Problem-Solving, 2D|35.00|25
+Super Meat Boy|Platformer|Challenging, Pixel Art, Indie|14.99|25
+Elden Ring|Souls-like|Challenging, Open-World, Immersive|60.00|25
+God of War|Adventure|Immersive, Hack-n-Slash, third-person| 25.00|25
+Ghosts of Tsushima|Open World|RPG, Third Person, Adventure|19.99|25
+Battlefield 1|FPS|Multiplayer, Competitive, WWI|15.00|25
+GTA: V|Multiplayer|Open World, FPS, Immersive|20.00|25
+DOOM|FPS|Fast-Paced, Gory, Single-Player|19.99|25

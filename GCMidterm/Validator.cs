@@ -52,7 +52,18 @@ namespace Validtor
             }
             return result;
         }
-       
+
+    
+        public static int GetInputInt(string s)
+        {
+            int result = -1;
+            do 
+            {
+                Console.WriteLine($"{s}");
+            }
+            while (!int.TryParse(Console.ReadLine(), out result)) ;
+            return result;
+        }
         public static bool GetContinue(string message)
         {
             bool result = false;
