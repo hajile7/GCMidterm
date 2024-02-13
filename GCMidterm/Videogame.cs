@@ -17,14 +17,16 @@ namespace GCMidterm
         public string category { get; set; }
         public string description { get; set; }
         public decimal price { get; set; }
+        public int quantity { get; set; }
 
         //constructor 
-        public Videogame(string _name, string _category, string _description, decimal _price)
+        public Videogame(string _name, string _category, string _description, decimal _price, int _quantity)
         {
             name = _name;
             category = _category;
             description = _description;
             price = _price;
+            quantity = _quantity;
         }
 
         //Purchase Method
@@ -37,7 +39,7 @@ namespace GCMidterm
         public override string ToString()
 
         {
-            return string.Format("{0, -20} {1, -15} {2, -40} {3, 10:C}", name, category, description, price); //:C will convert price to currency
+            return string.Format("{0, -20} {1, -15} {2, -40} {3, 10:C} {4, 15}", name, category, description, price, quantity); //:C will convert price to currency
         }
 
         //Tax Method

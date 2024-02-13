@@ -6,30 +6,50 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Validtor;
+
+string filepath = "../../../games.txt"; //Name text file here so we can delete it at the end of program to restock
 bool runProg = true;
+List<Videogame> videogames = new List<Videogame>();
 while (runProg)
 {
-
-
     Console.WriteLine("Welcome to the videogame store!\n");
 
-    //Create + Print list of games
-    List<Videogame> videogames = new List<Videogame>();
-    videogames.AddRange(new List<Videogame>
-{
-    new Videogame("Celeste", "Platformer", "Challenging, Pixel Art, Indie",  19.99m),
-    new Videogame("Hollow Knight", "Metroidvania", "Challenging, Action, Indie",  14.99m),
-    new Videogame("Apex Legends", "FPS", "Multiplayer, Competitive, F2P",  0.00m),
-    new Videogame("Pokemon Crystal", "RPG", "Immersive, Pixel Art, Adventure",  75.00m),
-    new Videogame("Factorio", "Factory Builder", "Immersive, Problem-Solving, 2D",  35.00m),
-    new Videogame("Super Meat Boy", "Platformer", "Challenging, Pixel Art, Indie",  14.99m),
-    new Videogame("Elden Ring", "Souls-like", "Challenging, Open-World, Immersive",  60.00m),
-    new Videogame("God of War", "Adventure", "Immersive, Hack-n-Slash, third-person",  25.00m),
-    new Videogame("Ghosts of Tsushima ", "Open World", "RPG, Third Person , Adventure",  35.00m),
-    new Videogame("BattleField 1", "FPS", "Multiplayer, Competive, WWI",  15.00m),
-    new Videogame("GTA:V", "Multiplayer", "Open World, FPS, Immersive",  20.00m),
-    new Videogame("DOOM", "FPS", "Fast-Paced, Gory, Single-Player",  19.99m),
-});
+    //create text file for games 
+    if (File.Exists(filepath) == false)
+    {
+        StreamWriter writer = new StreamWriter(filepath);
+        writer.WriteLine("Celeste|Platformer|Challenging, Pixel Art, Indie|19.99|25");
+        writer.WriteLine("Hollow Knight|Metrovania|Challenging, Action, Indie|19.99|25");
+        writer.WriteLine("Apex Legends|FPS|Multiplayer, Competitive, F2P| 0.00|25");
+        writer.WriteLine("Pokemon Crystal|RPG|Immersive, Pixel Art, Adventure|  75.00|2");
+        writer.WriteLine("Factorio|Factory Builder|Immersive, Problem-Solving, 2D|35.00|25");
+        writer.WriteLine("Super Meat Boy|Platformer|Challenging, Pixel Art, Indie|14.99|25");
+        writer.WriteLine("Elden Ring|Souls-like|Challenging, Open-World, Immersive|60.00|25");
+        writer.WriteLine("God of War|Adventure|Immersive, Hack-n-Slash, third-person| 25.00|25");
+        writer.WriteLine("Ghosts of Tsushima|Open World|RPG, Third Person, Adventure|19.99|25");
+        writer.WriteLine("Battlefield 1|FPS|Multiplayer, Competitive, WWI|15.00|25");
+        writer.WriteLine("GTA: V|Multiplayer|Open World, FPS, Immersive|20.00|25");
+        writer.WriteLine("DOOM|FPS|Fast-Paced, Gory, Single-Player|19.99|25");
+        writer.Close();
+    }
+
+    //Read text file list to object list
+    StreamReader reader = new StreamReader(filepath);
+    while (true)
+    {
+        string line = reader.ReadLine();
+        if (line == null)
+        {
+            break;
+        }
+        else
+        {
+            string[] parts = line.Split("|");
+            Videogame c = new Videogame(parts[0], parts[1], parts[2], decimal.Parse(parts[3]), int.Parse(parts[4]));
+            videogames.Add(c);
+        }
+    }
+    reader.Close();
 
     //decimal to keep a running total
     decimal runningTotal = 0;
@@ -38,12 +58,12 @@ while (runProg)
     const decimal tax = 0.06m;
     List<Videogame> cartlist = new List<Videogame>();
     //List
-    //start infinite program loop
+    //start order loop
     bool runProgram = true;
     while (runProgram)
     {
-        Console.WriteLine(string.Format("{0, -24} {1, -15} {2, -40} {3, 9}", "Title", "Genre", "Tags", "Price"));
-        Console.WriteLine(string.Format("{0, -24} {1, -15} {2, -40} {3, 10}", "===========", "==========", "=============================", "======"));
+        Console.WriteLine(string.Format("{0, -24} {1, -15} {2, -40} {3, 9} {4, 16}", "Title", "Genre", "Tags", "Price", "Quantity"));
+        Console.WriteLine(string.Format("{0, -24} {1, -15} {2, -40} {3, 10} {4, 15}", "===========", "==========", "=============================", "======", "========"));
         //Displays list
         for (int i = 0; i < videogames.Count; i++)
         {
@@ -59,11 +79,11 @@ while (runProg)
 
         //make separate var to store actual videogame object
         Videogame userChoice = videogames[choice - 1];
-        //Console.WriteLine(userChoice.ToString());
 
         //Get quantity
         Console.Write("How many copies would you like to purchase? ");
         int quantityChoice = Validator.GetInputInt();
+        userChoice.quantity -= quantityChoice; //update stock
 
         // Adds desired games and quantity to list
         for (int i = 0; i < quantityChoice; i++)
@@ -79,6 +99,11 @@ while (runProg)
         Console.WriteLine("Thank you! That will be $" + Videogame.AddPurchase(userChoice, quantityChoice));
         Console.WriteLine($"Your running total is {runningTotal:C}");
 
+        //update list 
+        StreamWriter update = new StreamWriter(filepath); //will upate current list 
+        foreach (Videogame v in videogames) { }
+        update.Close();
+
         //see if user would like to keep shopping
         runProgram = Validator.GetContinue("Would you like to purchase any other games?");
         Console.Clear();
@@ -89,11 +114,11 @@ while (runProg)
 
     //Valid Payment choices 
     List<string> paymentoptions = new List<string>()
-{
-"cash",
-"credit",
-"check"
-};
+    {
+        "cash",
+        "credit",
+        "check"
+    };
 
     //create grand total variable for math
     decimal grandTotal = Videogame.GrandTotalAmount(runningTotal, tax);
@@ -179,5 +204,7 @@ while (runProg)
 
     }
     runProg = Validator.GetContinue("Would you like to start a new order");
-    Console.Clear(); 
+    Console.Clear();
+
 }
+File.Delete(filepath);
